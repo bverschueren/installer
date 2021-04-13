@@ -50,6 +50,15 @@ func CloudProviderConfigSecret(cloud *clientconfig.Cloud) ([]byte, error) {
 	if cloud.AuthInfo.Password != "" {
 		res.WriteString("password = " + strconv.Quote(cloud.AuthInfo.Password) + "\n")
 	}
+	if cloud.AuthInfo.ApplicationCredentialID != "" {
+		res.WriteString("application-credential-id = " + strconv.Quote(cloud.AuthInfo.ApplicationCredentialID) + "\n")
+	}
+	if cloud.AuthInfo.ApplicationCredentialSecret != "" {
+		res.WriteString("application-credential-secret = " + strconv.Quote(cloud.AuthInfo.ApplicationCredentialSecret) + "\n")
+	}
+	if cloud.AuthInfo.ApplicationCredentialName != "" {
+		res.WriteString("application-credential-name = " + strconv.Quote(cloud.AuthInfo.ApplicationCredentialName) + "\n")
+	}
 	if cloud.AuthInfo.ProjectID != "" {
 		res.WriteString("tenant-id = " + strconv.Quote(cloud.AuthInfo.ProjectID) + "\n")
 	}
