@@ -84,4 +84,9 @@ type Platform struct {
 	// The subnet and network specified in MachinesSubnet will not be deleted or modified by the installer.
 	// +optional
 	MachinesSubnet string `json:"machinesSubnet,omitempty"`
+
+	// An OpenStack cloud configuration might add default security group rules for each new security group created.
+	// This setting allows to prevent default security rules from being added to a security group created by the installer. (default: false)
+	// +optional
+	DropDefaultSecurityGroupRules bool `json:"dropDefaultSecurityGroupRules,omitempty"`
 }

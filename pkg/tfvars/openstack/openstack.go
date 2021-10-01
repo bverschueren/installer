@@ -52,6 +52,7 @@ type config struct {
 	MachinesNetwork                  string                            `json:"openstack_machines_network_id,omitempty"`
 	MasterAvailabilityZones          []string                          `json:"openstack_master_availability_zones,omitempty"`
 	MasterRootVolumeAvalabilityZones []string                          `json:"openstack_master_root_volume_availability_zones,omitempty"`
+	DropDefaultSecurityGroupRules    bool                              `json:"openstack_drop_default_security_group_rules,omitempty"`
 }
 
 // TFVars generates OpenStack-specific Terraform variables.
@@ -138,10 +139,11 @@ func TFVars(
 		installConfig.Config.OpenStack.DefaultMachinePlatform,
 		installConfig.Config.Platform.OpenStack.MachinesSubnet,
 		installConfig.Config.Proxy,
+		installConfig.Config.DropDefaultSecurityGroupRules,
 	)
 }
 
-func tfVars(masterConfigs []*v1alpha1.OpenstackProviderSpec, workerConfigs []*v1alpha1.OpenstackProviderSpec, cloud string, externalNetwork string, externalDNS []string, apiFloatingIP string, ingressFloatingIP string, apiVIP string, ingressVIP string, baseImage string, baseImageProperties map[string]string, infraID string, userCA string, bootstrapIgn string, mastermpool, workermpool, defaultmpool *types_openstack.MachinePool, machinesSubnet string, proxy *types.Proxy) ([]byte, error) {
+func tfVars(masterConfigs []*v1alpha1.OpenstackProviderSpec, workerConfigs []*v1alpha1.OpenstackProviderSpec, cloud string, externalNetwork string, externalDNS []string, apiFloatingIP string, ingressFloatingIP string, apiVIP string, ingressVIP string, baseImage string, baseImageProperties map[string]string, infraID string, userCA string, bootstrapIgn string, mastermpool, workermpool, defaultmpool *types_openstack.MachinePool, machinesSubnet string, proxy *types.Proxy, dropDefaultSecurityGroupRules bool) ([]byte, error) {
 	zones := []string{}
 	seen := map[string]bool{}
 	for _, config := range masterConfigs {
@@ -152,16 +154,17 @@ func tfVars(masterConfigs []*v1alpha1.OpenstackProviderSpec, workerConfigs []*v1
 	}
 
 	cfg := &config{
-		ExternalNetwork:         externalNetwork,
-		Cloud:                   cloud,
-		FlavorName:              masterConfigs[0].Flavor,
-		APIFloatingIP:           apiFloatingIP,
-		IngressFloatingIP:       ingressFloatingIP,
-		APIVIP:                  apiVIP,
-		IngressVIP:              ingressVIP,
-		ExternalDNS:             externalDNS,
-		MachinesSubnet:          machinesSubnet,
-		MasterAvailabilityZones: zones,
+		ExternalNetwork:               externalNetwork,
+		Cloud:                         cloud,
+		FlavorName:                    masterConfigs[0].Flavor,
+		APIFloatingIP:                 apiFloatingIP,
+		IngressFloatingIP:             ingressFloatingIP,
+		APIVIP:                        apiVIP,
+		IngressVIP:                    ingressVIP,
+		ExternalDNS:                   externalDNS,
+		MachinesSubnet:                machinesSubnet,
+		MasterAvailabilityZones:       zones,
+		DropDefaultSecurityGroupRules: dropDefaultSecurityGroupRules,
 	}
 
 	if defaultmpool != nil && defaultmpool.RootVolume != nil {

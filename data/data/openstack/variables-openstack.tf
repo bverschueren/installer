@@ -374,3 +374,9 @@ variable "openstack_worker_server_group_policy" {
   type        = string
   description = "Policy of the server groups for the worker nodes."
 }
+
+variable "openstack_drop_default_security_group_rules" {
+  type = bool
+  default = false
+  description = "Delete the default egress security rules created on a new security group."
+}

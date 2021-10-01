@@ -49,6 +49,7 @@ module "bootstrap" {
   zone                    = var.openstack_master_availability_zones[0]
   root_volume_zone        = var.openstack_master_root_volume_availability_zones[0]
   additional_network_ids  = var.openstack_additional_network_ids
+  delete_default_rules    = var.openstack_drop_default_security_group_rules
 }
 
 module "masters" {
@@ -71,6 +72,7 @@ module "masters" {
   additional_network_ids = var.openstack_additional_network_ids
   zones                  = var.openstack_master_availability_zones
   root_volume_zones      = var.openstack_master_root_volume_availability_zones
+  delete_default_rules    = var.openstack_drop_default_security_group_rules
 }
 
 module "workers" {
@@ -83,23 +85,23 @@ module "workers" {
 module "topology" {
   source = "./topology"
 
-  cidr_block          = var.machine_v4_cidrs[0]
-  cluster_id          = var.cluster_id
-  cluster_domain      = var.cluster_domain
-  external_network    = var.openstack_external_network
-  external_network_id = var.openstack_external_network_id
-  masters_count       = var.master_count
-  masters_schedulable = var.masters_schedulable
-  api_floating_ip     = var.openstack_api_floating_ip
-  ingress_floating_ip = var.openstack_ingress_floating_ip
-  api_int_ip          = var.openstack_api_int_ip
-  ingress_ip          = var.openstack_ingress_ip
-  external_dns        = var.openstack_external_dns
-  trunk_support       = var.openstack_trunk_support
-  octavia_support     = var.openstack_octavia_support
-  machines_subnet_id  = var.openstack_machines_subnet_id
-  machines_network_id = var.openstack_machines_network_id
-  master_extra_sg_ids = var.openstack_master_extra_sg_ids
+  cidr_block           = var.machine_v4_cidrs[0]
+  cluster_id           = var.cluster_id
+  cluster_domain       = var.cluster_domain
+  external_network     = var.openstack_external_network
+  external_network_id  = var.openstack_external_network_id
+  masters_count        = var.master_count
+  api_floating_ip      = var.openstack_api_floating_ip
+  ingress_floating_ip  = var.openstack_ingress_floating_ip
+  api_int_ip           = var.openstack_api_int_ip
+  ingress_ip           = var.openstack_ingress_ip
+  external_dns         = var.openstack_external_dns
+  trunk_support        = var.openstack_trunk_support
+  octavia_support      = var.openstack_octavia_support
+  machines_subnet_id   = var.openstack_machines_subnet_id
+  machines_network_id  = var.openstack_machines_network_id
+  master_extra_sg_ids  = var.openstack_master_extra_sg_ids
+  delete_default_rules = var.openstack_drop_default_security_group_rules
 }
 
 data "openstack_images_image_v2" "base_image" {

@@ -77,3 +77,8 @@ variable "master_extra_sg_ids" {
   description = "(optional) IDs of additional security groups for masters."
   type        = list(string)
 }
+
+variable "delete_default_rules" {
+  type        = bool
+  description = "Delete the default egress security rules created on a new security group."
+}

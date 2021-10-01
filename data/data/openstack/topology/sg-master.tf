@@ -1,7 +1,8 @@
 resource "openstack_networking_secgroup_v2" "master" {
-  name        = "${var.cluster_id}-master"
-  tags        = ["openshiftClusterID=${var.cluster_id}"]
-  description = local.description
+  name                 = "${var.cluster_id}-master"
+  tags                 = ["openshiftClusterID=${var.cluster_id}"]
+  description          = local.description
+  delete_default_rules = var.delete_default_rules
 }
 
 resource "openstack_networking_secgroup_rule_v2" "master_mcs" {

@@ -1,7 +1,8 @@
 resource "openstack_networking_secgroup_v2" "worker" {
-  name        = "${var.cluster_id}-worker"
-  tags        = ["openshiftClusterID=${var.cluster_id}"]
-  description = local.description
+  name                 = "${var.cluster_id}-worker"
+  tags                 = ["openshiftClusterID=${var.cluster_id}"]
+  description          = local.description
+  delete_default_rules = var.delete_default_rules
 }
 
 # TODO(mandre) Explicitely enable egress

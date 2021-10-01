@@ -65,3 +65,8 @@ variable "root_volume_zones" {
   type        = list(string)
   description = "Availability Zones to schedule root volumes on."
 }
+
+variable "delete_default_rules" {
+  type        = bool
+  description = "Delete the default egress security rules created on a new security group."
+}

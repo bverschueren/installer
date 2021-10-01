@@ -76,3 +76,8 @@ variable "additional_network_ids" {
   type        = list(string)
   description = "IDs of additional networks for the bootstrap node."
 }
+
+variable "delete_default_rules" {
+  type = bool
+  description = "Delete the default egress security rules created on a new security group."
+}
