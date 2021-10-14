@@ -139,7 +139,7 @@ func TFVars(
 		installConfig.Config.OpenStack.DefaultMachinePlatform,
 		installConfig.Config.Platform.OpenStack.MachinesSubnet,
 		installConfig.Config.Proxy,
-		installConfig.Config.DropDefaultSecurityGroupRules,
+		installConfig.Config.Platform.OpenStack.DropDefaultSecurityGroupRules,
 	)
 }
 
